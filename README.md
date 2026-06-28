@@ -1,4 +1,4 @@
-# Instagrum — Mini Social Media App
+# Instagram — Mini Social Media App
 
 A mini Instagram clone built with **Express.js + MongoDB** (backend) and **vanilla HTML/CSS/JavaScript** (frontend).
 

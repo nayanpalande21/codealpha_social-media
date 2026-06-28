@@ -111,6 +111,4 @@ Go to **http://localhost:5000** in your browser. The Express server serves the f
 | GET | `/api/follow/:userId/followers` | List followers |
 | GET | `/api/follow/:userId/following` | List following |
 
-## Notes
-- Images are stored as **URLs only** (no file upload) — paste a link when creating a post or setting a profile picture.
-- All protected routes require a `Authorization: Bearer <token>` header, handled automatically by the frontend once you log in (token is stored in `localStorage`).
+

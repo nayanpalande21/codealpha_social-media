@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instagrum</title>
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ============ AUTH VIEWS ============ -->
+  <div id="auth-view" class="auth-wrapper hidden">
+    <div class="auth-box">
+
+      <!-- Login form -->
+      <div id="login-card" class="auth-card">
+        <span class="logo">Instagrum</span>
+        <div id="login-error" class="auth-error"></div>
+        <form id="login-form">
+          <div class="auth-field">
+            <input type="email" id="login-email" placeholder="Email" required />
+          </div>
+          <div class="auth-field">
+            <input type="password" id="login-password" placeholder="Password" required />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:10px;">Log in</button>
+        </form>
+      </div>
+      <div class="auth-footer-card">
+        Don't have an account? <a href="#" id="show-register">Sign up</a>
+      </div>
+
+      <!-- Register form -->
+      <div id="register-card" class="auth-card hidden">
+        <span class="logo">Instagrum</span>
+        <p style="color:var(--text-secondary); margin-bottom:18px;">Sign up to see photos from your friends.</p>
+        <div id="register-error" class="auth-error"></div>
+        <form id="register-form">
+          <div class="auth-field">
+            <input type="email" id="register-email" placeholder="Email" required />
+          </div>
+          <div class="auth-field">
+            <input type="text" id="register-fullname" placeholder="Full Name" />
+          </div>
+          <div class="auth-field">
+            <input type="text" id="register-username" placeholder="Username" required minlength="3" />
+          </div>
+          <div class="auth-field">
+            <input type="password" id="register-password" placeholder="Password" required minlength="6" />
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top:10px;">Sign up</button>
+        </form>
+      </div>
+      <div id="register-footer" class="auth-footer-card hidden">
+        Have an account? <a href="#" id="show-login">Log in</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ MAIN APP ============ -->
+  <div id="app-view" class="hidden">
+
+    <header class="header">
+      <div class="header-inner">
+        <a href="#" class="logo" data-nav="feed">Instagrum</a>
+
+        <div class="header-search">
+          <input type="text" id="search-input" placeholder="Search" autocomplete="off" />
+          <div id="search-results" class="search-results"></div>
+        </div>
+
+        <nav class="header-nav">
+          <button data-nav="feed" title="Home">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          </button>
+          <button data-nav="explore" title="Explore">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          </button>
+          <button id="new-post-btn" title="New post">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          </button>
+          <button class="avatar-btn" data-nav="my-profile" title="Profile">
+            <img id="nav-avatar" src="https://i.pravatar.cc/150?img=1" alt="Profile" />
+          </button>
+          <button id="logout-btn" title="Log out">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main class="app-main">
+
+      <!-- FEED VIEW -->
+      <section id="feed-view" class="feed-column">
+        <div id="stories-bar" class="stories-bar"></div>
+        <div id="feed-posts"></div>
+      </section>
+
+      <!-- EXPLORE VIEW -->
+      <section id="explore-view" class="feed-column hidden">
+        <div id="explore-posts"></div>
+      </section>
+
+      <!-- PROFILE VIEW -->
+      <section id="profile-view" class="feed-column hidden">
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <img id="profile-avatar-img" src="" alt="" />
+          </div>
+          <div class="profile-info">
+            <div class="profile-top-row">
+              <span class="username" id="profile-username"></span>
+              <button id="profile-edit-btn" class="btn btn-outline hidden">Edit profile</button>
+              <button id="profile-follow-btn" class="btn btn-primary hidden">Follow</button>
+            </div>
+            <div class="profile-stats">
+              <span><span class="stat-value" id="profile-posts-count">0</span> posts</span>
+              <span><span class="stat-value" id="profile-followers-count">0</span> followers</span>
+              <span><span class="stat-value" id="profile-following-count">0</span> following</span>
+            </div>
+            <div class="profile-fullname" id="profile-fullname"></div>
+            <div class="profile-bio" id="profile-bio"></div>
+          </div>
+        </div>
+        <div class="profile-tabs">
+          <div class="profile-tab active">POSTS</div>
+        </div>
+        <div id="profile-grid" class="profile-grid"></div>
+      </section>
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar-column">
+        <div class="sidebar-profile">
+          <img id="sidebar-avatar" src="https://i.pravatar.cc/150?img=1" alt="" />
+          <div>
+            <div class="username" id="sidebar-username"></div>
+            <div class="fullname" id="sidebar-fullname"></div>
+          </div>
+        </div>
+        <div class="suggestions-header">
+          <span>Suggestions for you</span>
+        </div>
+        <div id="suggestions-list"></div>
+      </aside>
+
+    </main>
+  </div>
+
+  <!-- ============ NEW POST MODAL ============ -->
+  <div id="new-post-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        Create new post
+        <button class="modal-close" data-close="new-post-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="new-post-error" class="auth-error"></div>
+        <form id="new-post-form">
+          <div class="modal-field">
+            <label for="post-image-url">Image URL</label>
+            <input type="url" id="post-image-url" placeholder="https://example.com/photo.jpg" required />
+          </div>
+          <div class="modal-field">
+            <label for="post-caption">Caption</label>
+            <textarea id="post-caption" placeholder="Write a caption..." maxlength="2200"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Share</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ EDIT PROFILE MODAL ============ -->
+  <div id="edit-profile-modal" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        Edit profile
+        <button class="modal-close" data-close="edit-profile-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div id="edit-profile-error" class="auth-error"></div>
+        <form id="edit-profile-form">
+          <div class="modal-field">
+            <label for="edit-profile-picture">Profile picture URL</label>
+            <input type="url" id="edit-profile-picture" placeholder="https://example.com/avatar.jpg" />
+          </div>
+          <div class="modal-field">
+            <label for="edit-fullname">Full name</label>
+            <input type="text" id="edit-fullname" />
+          </div>
+          <div class="modal-field">
+            <label for="edit-bio">Bio</label>
+            <textarea id="edit-bio" maxlength="150"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Save changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ POST DETAIL MODAL (comments) ============ -->
+  <div id="post-detail-modal" class="modal-overlay">
+    <div class="modal-box" style="max-width:420px;">
+      <div class="modal-header">
+        Comments
+        <button class="modal-close" data-close="post-detail-modal">&times;</button>
+      </div>
+      <div class="modal-body" style="max-height:60vh; overflow-y:auto;">
+        <div id="post-detail-comments"></div>
+      </div>
+      <form id="post-detail-comment-form" class="post-add-comment" style="border-top:1px solid var(--border); margin-top:0;">
+        <input type="text" id="post-detail-comment-input" placeholder="Add a comment..." maxlength="500" />
+        <button type="submit">Post</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/feed.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
